@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matsya Mithra - Login + Home + Pages</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#D9EAF2;min-height:100vh}
+/* CENTER WRAP - LAPTOP LO KUDA MOBILE LAAGE */
+.app{max-width:480px;margin:0 auto;background:#E8F4F8;min-height:100vh;position:relative;box-shadow:0 0 30px rgba(0,0,0,.2);padding-bottom:90px;overflow-x:hidden}
+
+/* 1. LOGIN - DEMO PIC LAAGE */
+#loginPage{min-height:100vh;background:#0A2A4D;display:flex;flex-direction:column;align-items:center}
+.loginTop{width:100%;background:linear-gradient(180deg,#0A2A4D,#0E5A8A);color:#fff;text-align:center;padding:38px 16px 70px}
+.loginTop .fish{font-size:68px}
+.loginTop h1{font-size:32px}
+.loginTop p{opacity:.9;font-size:14px}
+.loginBox{background:#fff;width:calc(100% - 32px);max-width:440px;border-radius:22px;padding:22px;text-align:center;box-shadow:0 15px 40px rgba(0,0,0,.3);margin:-45px 16px 20px}
+.langs{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.langs button{padding:8px 14px;border-radius:20px;border:1px solid #ddd;background:#fff;font-weight:bold;cursor:pointer}
+.langs button.on{background:#0A2A4D;color:#fff}
+input,select,textarea{width:100%;padding:13px;margin:7px 0;border:1.5px solid #B9D9E5;border-radius:13px;font-size:16px;background:#fff}
+.btn{width:100%;padding:14px;border:none;border-radius:13px;background:#0A4D68;color:#fff;font-weight:bold;font-size:16px;cursor:pointer;margin:6px 0}
+.green{background:#2E7D32}.grey{background:#607D8B}
+
+/* 2. HEADER - FIXED - CUT AVVADHU */
+header{background:linear-gradient(135deg,#0A2A4D,#0E5A8A);color:#fff;padding:12px;position:sticky;top:0;z-index:40;display:none}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.logo{display:flex;gap:8px;align-items:center;cursor:pointer}
+.ic{width:44px;height:44px;background:#FFB300;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.hbtn{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);color:#fff;padding:7px 9px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:12px;position:relative;white-space:nowrap}
+.dot{position:absolute;top:-5px;right:-4px;background:#FF1744;color:#fff;font-size:10px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.drop{position:absolute;right:12px;top:68px;background:#fff;color:#111;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.3);width:300px;max-width:92vw;z-index:99;display:none;overflow:hidden}
+.drop button{width:100%;padding:13px 14px;border:none;border-bottom:1px solid #eee;background:#fff;text-align:left;font-size:14px;cursor:pointer;display:flex;justify-content:space-between}
+.wrap{max-width:480px;margin:auto;padding:12px}
+.card{background:#fff;padding:14px;border-radius:18px;margin:10px 0;box-shadow:0 4px 14px rgba(0,0,0,.06);display:flex;gap:12px;align-items:center;cursor:pointer}
+.card:active{transform:scale(.98)}
+.icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.avatar{width:64px;height:64px;background:#FFB300;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;margin:auto}
+.badge{background:#FFB300;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:bold;color:#111}
+
+/* 3. FOOTER */
+footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0F5A8A;display:flex;justify-content:space-around;padding:12px 4px 14px;z-index:40;display:none}
+footer button{background:none;border:none;color:#BFD9EA;font-size:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:bold}
+footer button.active{color:#fff}
+footer span{font-size:22px}
+
+/* 4. FULL PAGE - SLIDE KADHU - PAGE LAGA */
+#detailPage{display:none;padding:12px;padding-bottom:30px}
+.backBtn{background:#fff;border:1px solid #ddd;padding:10px 14px;border-radius:20px;font-weight:bold;cursor:pointer;margin-bottom:12px}
+.step{background:#F1F8E9;padding:12px;border-radius:12px;margin:8px 0;border-left:5px solid #2E7D32}
+.qchip{display:inline-block;background:#E3F2FD;padding:7px 12px;border-radius:20px;font-size:13px;margin:3px;cursor:pointer}
+.chat{background:#F1F8F9;padding:12px;border-radius:12px;margin-top:10px;line-height:1.6}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;z-index:99;padding:20px 12px;overflow:auto}
+.modalBox{background:#fff;width:100%;max-width:440px;border-radius:20px;padding:18px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+  <div class="loginTop"><div class="fish">🐟</div><h1>Matsya Mithra</h1><p>From 0 to Harvest - మత్స్య మిత్ర</p></div>
+  <div class="loginBox">
+    <div class="langs"><button id="lTe" onclick="setLang('te')">తెలుగు</button><button id="lHi" onclick="setLang('hi')">हिंदी</button><button id="lEn" class="on" onclick="setLang('en')">English</button></div>
+    <h2>🔐 Login - With OTP</h2>
+    <input id="name" value="Priya" placeholder="Your Name">
+    <input id="phone" value="9876543210" maxlength="10" placeholder="Mobile - 10 Digits">
+    <button class="btn green" onclick="sendOTP()">Send OTP →</button>
+    <input id="email" value="priya@gmail.com" placeholder="Email">
+    <input id="otp" placeholder="OTP - See Demo">
+    <button class="btn" onclick="verifyOTP()">Login → Home</button>
+    <p id="loginMsg"></p><p style="font-size:12px;color:#888">Login ayyaka Home open avthundhi</p>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="mainHead">
+<div class="hrow">
+<div class="logo" onclick="goHome()"><div class="ic">🐟</div><div><h1 style="font-size:19px;line-height:1">Matsya Mithra</h1><p style="font-size:11px;opacity:.9">From 0 to Harvest</p></div></div>
+<div style="display:flex;gap:5px">
+<button class="hbtn" onclick="toggleDrop('langDrop')">🌐 <span id="curLangLabel">English</span> ▼</button>
+<button class="hbtn" onclick="toggleDrop('notifDrop')">🔔<span class="dot" id="notifCount">3</span></button>
+<button class="hbtn" onclick="toggleDrop('profileDrop')">👤 <span id="headerProfileName">Priya</span> ▼</button>
+</div>
+</div>
+<div style="margin-top:10px;background:rgba(255,255,255,.15);padding:8px 12px;border-radius:20px;font-size:13px;display:flex;justify-content:space-between"><span>👋 Hello, <b id="userNameTop">Priya</b></span><span id="topMini">🌤️ 27°C</span></div>
+<div class="drop" id="langDrop"><div style="padding:14px;font-weight:bold;background:#0A2A4D;color:#fff">🌐 Choose Language</div><button onclick="setLang('te');closeDrops()">తెలుగు - Telugu <span>›</span></button><button onclick="setLang('hi');closeDrops()">हिंदी - Hindi <span>›</span></button><button onclick="setLang('en');closeDrops()">English <span>›</span></button></div>
+<div class="drop" id="notifDrop"><div style="padding:14px;font-weight:bold;background:#0A2A4D;color:#fff;display:flex;justify-content:space-between"><span>🔔 Notifications</span><span onclick="markAllRead()" style="cursor:pointer;font-size:12px;background:#FFB300;color:#111;padding:4px 8px;border-radius:10px">Mark Read</span></div><div id="notifList"></div></div>
+<div class="drop" id="profileDrop"><div style="padding:16px;text-align:center;background:#FFF8E1"><div class="avatar">👤</div><h3 id="profileName" style="margin-top:8px">Priya</h3><p id="profilePhone" style="color:#666;font-size:13px">9876543210 | priya@gmail.com</p><span class="badge">🐟 Fish Farmer</span></div><button onclick="closeDrops();openPage('profile')">👤 My Profile <span>›</span></button><button onclick="closeDrops();openPage('schemes')">🏛️ Schemes <span>›</span></button><button onclick="closeDrops();openPage('help')">❓ Help <span>›</span></button><button onclick="logoutUser()" style="color:#C62828">🚪 Logout <span>›</span></button></div>
+</header>
+
+<!-- HOME PAGE -->
+<div id="mainApp" style="display:none">
+<div class="wrap">
+<div style="background:#fff;padding:14px;border-radius:18px;display:flex;gap:12px;align-items:center;box-shadow:0 4px 14px rgba(0,0,0,.06)"><div style="width:56px;height:56px;background:#FFD54F;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0">🌦️</div><div><b>Today's Weather</b><p style="font-size:13px;color:#555">📍 Nellore, Andhra Pradesh</p><p style="font-weight:bold" id="topWeather">🌤️ Partly Cloudy | 27°C | Humidity 75%</p><p style="font-size:13px;color:#2e7d32;font-weight:bold">💡 Good weather. Best time for Spraying.</p></div></div>
+<h2 style="margin:16px 0 8px">🏠 Home</h2>
+<p style="color:#666;font-size:13px;margin-bottom:10px">Edhi nokkithe - Adhi Full Page laaga open avthundhi!</p>
+<div id="homeList"></div>
+<h2 style="margin:16px 0 8px">✨ More - Schemes, Calculator, Chatbot</h2>
+<div id="moreList"></div>
+</div>
+</div>
+
+<!-- DETAIL FULL PAGE - CLICK CHESI OPEN AVVUDHI -->
+<div id="detailPage">
+<button class="backBtn" onclick="goHome()">← Back to Home</button>
+<h2 id="pageTitle">Title</h2><p id="pageSub" style="color:#666;font-size:13px;margin-bottom:10px"></p>
+<div id="pageBody"></div>
+<button class="btn grey" onclick="goHome()">← Back - Home ki Vellu</button>
+</div>
+
+<!-- FOOTER -->
+<footer id="mainFoot">
+<button id="ftHome" class="active" onclick="goHome()"><span>🏠</span>Home</button>
+<button onclick="openPage('chat');setTimeout(()=>startVoice(),400)"><span>🎤</span>Voice</button>
+<button onclick="openSearch()"><span>🔍</span>Search</button>
+<button onclick="openPage('help')"><span>❓</span>Help</button>
+</footer>
+
+<div class="modal" id="searchModal" onclick="if(event.target==this)closeSearch()"><div class="modalBox"><h2>🔍 Search</h2><input id="globalSearch" onkeyup="doGlobalSearch()" placeholder="Ex: Feed, pH, PMMSY..."><div id="searchResults" style="margin-top:10px"></div><button class="btn grey" onclick="closeSearch()">Close</button></div></div>
+</div>
+
+<script>
+let curLang='en',otp="",user={name:"Priya",phone:"9876543210",email:"priya@gmail.com"},notifRead=[false,false,false],curPage=null;
+const HOME={en:[{id:"stage1",i:"🦐",c:"#DBEAFE",t:"Stage 1: How to Start?",s:"No pond? Rent? Prawn vs Fish?"},{id:"stage2",i:"💧",c:"#DCFCE7",t:"Stage 2: Pond Details",s:"Depth, Soil, Shape"},{id:"stage3",i:"🧪",c:"#FEF3C7",t:"Stage 3: Pond Preparation",s:"Drying - Lime 100 Kg - Water"},{id:"stage4",i:"🐣",c:"#FCE7F3",t:"Stage 4: Seed Release",s:"Fish 4000 / Prawn 30000"},{id:"stage5",i:"🌾",c:"#E0E7FF",t:"Stage 5: Feeding + pH",s:"Feed Table + pH 6.5-8.5"},{id:"stage6",i:"🩺",c:"#FEE2E2",t:"Stage 6: Disease + Growth",s:"White Spots - Solution"},{id:"stage7",i:"🎣",c:"#CCFBF1",t:"Stage 7: Harvest - Selling",s:"When? Where? Rate?"}],
+te:[{id:"stage1",i:"🦐",c:"#DBEAFE",t:"దశ 1: ఎలా మొదలు పెట్టాలి?",s:"చెరువు లేదా? అద్దె? రొయ్య vs చేప?"},{id:"stage2",i:"💧",c:"#DCFCE7",t:"దశ 2: చెరువు వివరాలు",s:"లోతు, నేల, ఆకారం"},{id:"stage3",i:"🧪",c:"#FEF3C7",t:"దశ 3: చెరువు సిద్ధం",s:"ఎండబెట్టు - సున్నం 100 Kg - నీళ్ళు"},{id:"stage4",i:"🐣",c:"#FCE7F3",t:"దశ 4: సీడ్ విడుదల",s:"చేప 4000 / రొయ్య 30000"},{id:"stage5",i:"🌾",c:"#E0E7FF",t:"దశ 5: మేత + pH",s:"మేత టేబుల్ + pH 6.5-8.5"},{id:"stage6",i:"🩺",c:"#FEE2E2",t:"దశ 6: జబ్బు + పెరుగుదల",s:"తెల్ల మచ్చలు - పరిష్కారం"},{id:"stage7",i:"🎣",c:"#CCFBF1",t:"దశ 7: హార్వెస్ట్ - అమ్మకం",s:"ఎప్పుడు? ఎక్కడ? రేటు?"}],
+hi:[{id:"stage1",i:"🦐",c:"#DBEAFE",t:"चरण 1: कैसे शुरू करें?",s:"तालाब नहीं? किराया? झींगा vs मछली?"},{id:"stage2",i:"💧",c:"#DCFCE7",t:"चरण 2: तालाब विवरण",s:"गहराई, मिट्टी, आकार"},{id:"stage3",i:"🧪",c:"#FEF3C7",t:"चरण 3: तालाब तैयारी",s:"सुखाना - चूना 100 Kg - पानी"},{id:"stage4",i:"🐣",c:"#FCE7F3",t:"चरण 4: बीज छोड़ना",s:"मछली 4000 / झींगा 30000"},{id:"stage5",i:"🌾",c:"#E0E7FF",t:"चरण 5: चारा + pH",s:"चारा टेबल + pH 6.5-8.5"},{id:"stage6",i:"🩺",c:"#FEE2E2",t:"चरण 6: बीमारी + वृद्धि",s:"सफेद धब्बे - समाधान"},{id:"stage7",i:"🎣",c:"#CCFBF1",t:"चरण 7: हार्वेस्ट - बिक्री",s:"कब? कहाँ? रेट?"}]};
+const MORE={en:[{id:"schemes",i:"🏛️",c:"#F0FDF4",t:"Govt Schemes",s:"PMMSY 40% / 60% - Rs.20,000 - Insurance"},{id:"calc",i:"🧮",c:"#FFF7ED",t:"Pond Calculator - Profit",s:"Cost - Profit - Live Calculation"},{id:"chat",i:"🤖",c:"#EFF6FF",t:"Chatbot - Ask Anything",s:"Pond, Feed, Disease, Loan - Voice + Chat"}],
+te:[{id:"schemes",i:"🏛️",c:"#F0FDF4",t:"ప్రభుత్వ పథకాలు",s:"PMMSY 40% / 60% - Rs.20,000 - ఇన్సూరెన్స్"},{id:"calc",i:"🧮",c:"#FFF7ED",t:"చెరువు కాలిక్యులేటర్ - లాభం",s:"ఖర్చు - లాభం - లైవ్ లెక్క"},{id:"chat",i:"🤖",c:"#EFF6FF",t:"చాట్‌బాట్ - ఏదైనా అడుగు",s:"చెరువు, మేత, జబ్బు, లోన్ - వాయిస్ + చాట్"}],
+hi:[{id:"schemes",i:"🏛️",c:"#F0FDF4",t:"सरकारी योजनाएं",s:"PMMSY 40% / 60% - Rs.20,000 - बीमा"},{id:"calc",i:"🧮",c:"#FFF7ED",t:"तालाब कैलकुलेटर - लाभ",s:"खर्च - लाभ - लाइव हिसाब"},{id:"chat",i:"🤖",c:"#EFF6FF",t:"चैटबॉट - कुछ भी पूछें",s:"तालाब, चारा, बीमारी, लोन - वॉयस + चैट"}]};
+const SLIDES={en:{
+stage1:{t:"🦐 Stage 1: How to Start?",s:"0 to Start",b:`<div class="step"><b>No Pond?</b><p>Rent - 1 Acre Rs.20,000-30,000 / Year</p></div><div class="step"><b>Prawn vs Fish?</b><p>Prawn 3-4 Months, Fish 8-10 Months</p></div><div class="step"><b>Budget</b><p>1 Acre ~Rs.3 Lakhs, PMMSY 40% Govt</p></div><button class="btn green" onclick="openPage('stage2')">Next Page → Stage 2</button>`},
+stage2:{t:"💧 Stage 2: Pond Details",s:"Depth, Soil, Shape",b:`<div class="step"><b>Depth</b><p>Min 5 Feet, Best 6 Feet</p></div><div class="step"><b>Soil</b><p>Black Clay Best</p></div><div class="step"><b>Shape</b><p>Rectangle Best</p></div><button class="btn green" onclick="openPage('stage3')">Next Page → Stage 3</button>`},
+stage3:{t:"🧪 Stage 3: Pond Preparation",s:"Drying - Lime - Water",b:`<div class="step"><b>Dry</b><p>15 Days Sun</p></div><div class="step"><b>Lime</b><p>100 Kg / Acre</p></div><div class="step"><b>Water</b><p>Fill, Wait 2 Days, Light Green = Good</p></div><button class="btn green" onclick="openPage('stage4')">Next Page → Stage 4</button>`},
+stage4:{t:"🐣 Stage 4: Seed Release",s:"Where? How many?",b:`<div class="step"><b>Where?</b><p>Govt Hatchery Only</p></div><div class="step"><b>How many?</b><p>Fish 4000, Prawn 30000 / Acre</p></div><div class="step"><b>When?</b><p>Before 7 AM</p></div><button class="btn green" onclick="openPage('stage5')">Next Page → Stage 5</button>`},
+stage5:{t:"🌾 Stage 5: Feeding + pH",s:"Feed Table - pH 6.5-8.5",b:`<div class="step"><b>Fish Feed</b><p>Day 1-15: 2kg | Month 2: 5kg | Month 6: 11kg</p></div><div class="step"><b>Prawn Feed</b><p>Day 1-15: 2kg | Month 2: 7kg | Month 4: 12kg</p></div><div class="step"><b>pH</b><p>6.5-8.5, Low = Lime</p></div><button class="btn green" onclick="openPage('stage6')">Next Page → Stage 6</button>`},
+stage6:{t:"🩺 Stage 6: Disease",s:"Disease - Solution",b:`<div class="step"><b>White Spots</b><p>Lime + Salt, Stop feed 2 days</p></div><div class="step"><b>Not Eating</b><p>Stop feed, Check water</p></div><button class="btn green" onclick="openPage('stage7')">Next Page → Stage 7</button>`},
+stage7:{t:"🎣 Stage 7: Harvest",s:"When? Where? Rate?",b:`<div class="step"><b>When?</b><p>Prawn 3-4 Months, Fish 8-10 Months</p></div><div class="step"><b>Where?</b><p>Local Market - Rohu ₹180/kg, Prawn ₹350/kg</p></div><p>🎉 Congratulations! 0 to Harvest learnt!</p>`},
+schemes:{t:"🏛️ Govt Schemes",s:"PMMSY, Subsidy, Insurance",b:`<input id="schemeSearch" onkeyup="filterSchemes()" placeholder="Search..."><div id="schemesList" style="margin-top:10px"></div>`},
+calc:{t:"🧮 Pond Calculator",s:"Cost - Profit - Live",b:`<label>Acres:</label><input type="number" id="calcAcre" value="1" oninput="calcPond()"><label>Type:</label><select id="calcType" onchange="calcPond()"><option value="chepa">🐟 Fish</option><option value="royya">🦐 Prawn</option></select><label>Seed ₹:</label><input type="number" id="rateSeed" value="5" oninput="calcPond()"><label>Feed ₹/kg:</label><input type="number" id="rateFeed" value="40" oninput="calcPond()"><label>Selling ₹/kg:</label><input type="number" id="rateSell" value="150" oninput="calcPond()"><button class="btn" onclick="calcPond()">Calculate</button><p id="calcResult"></p>`},
+chat:{t:"🤖 Chatbot",s:"Ask Anything - Voice + Chat",b:`<input id="searchInput" placeholder="Ask doubt..."><button class="btn" onclick="startVoice()">🎤 Speak</button><button class="btn green" onclick="askBot()">Ask Bot</button><div id="quickQ"></div><div class="chat" id="chatBox"></div>`},
+profile:{t:"👤 My Profile",s:"Edit Profile",b:`<label>Name</label><input id="editName" value="Priya"><label>Phone</label><input id="editPhone" value="9876543210"><label>Email</label><input id="editEmail" value="priya@gmail.com"><button class="btn green" onclick="saveProfile()">Save</button><p id="profileSaveMsg"></p><button class="btn" style="background:#C62828" onclick="logoutUser()">Logout</button>`},
+help:{t:"❓ Help",s:"Support",b:`<div id="helpList"></div><h3 style="margin-top:12px">Still Doubt?</h3><input id="helpName" placeholder="Your Name"><textarea id="helpMsg" placeholder="Your Doubt..." style="width:100%;padding:12px;border-radius:12px"></textarea><button class="btn green" onclick="sendHelp()">Send Message</button><p id="helpResult"></p>`}
+},
+te:{
+stage1:{t:"🦐 దశ 1: ఎలా మొదలు పెట్టాలి?",s:"0 నుండి స్టార్ట్",b:`<div class="step"><b>చెరువు లేదా?</b><p>అద్దె - 1 ఎకరం Rs.20,000-30,000</p></div><div class="step"><b>రొయ్య vs చేప?</b><p>రొయ్య 3-4 నెలలు, చేప 8-10 నెలలు</p></div><div class="step"><b>బడ్జెట్</b><p>1 ఎకరం ~Rs.3 లక్షలు, PMMSY 40%</p></div><button class="btn green" onclick="openPage('stage2')">తరువాత పేజీ → దశ 2</button>`},
+stage2:{t:"💧 దశ 2: చెరువు వివరాలు",s:"లోతు, నేల, ఆకారం",b:`<div class="step"><b>లోతు</b><p>కనీసం 5 అడుగులు, బెస్ట్ 6</p></div><div class="step"><b>నేల</b><p>నల్ల రేగడి బెస్ట్</p></div><div class="step"><b>ఆకారం</b><p>దీర్ఘ చతురస్రం బెస్ట్</p></div><button class="btn green" onclick="openPage('stage3')">తరువాత పేజీ → దశ 3</button>`},
+stage3:{t:"🧪 దశ 3: చెరువు సిద్ధం",s:"ఎండ - సున్నం - నీళ్ళు",b:`<div class="step"><b>ఎండ</b><p>15 రోజులు ఎండ</p></div><div class="step"><b>సున్నం</b><p>100 Kg / ఎకరం</p></div><div class="step"><b>నీళ్ళు</b><p>నింపి 2 రోజులు ఆగు</p></div><button class="btn green" onclick="openPage('stage4')">తరువాత పేజీ → దశ 4</button>`},
+stage4:{t:"🐣 దశ 4: సీడ్ విడుదల",s:"ఎక్కడ? ఎంత?",b:`<div class="step"><b>ఎక్కడ?</b><p>ప్రభుత్వ హ్యాచరీ మాత్రమే</p></div><div class="step"><b>ఎంత?</b><p>చేప 4000, రొయ్య 30000</p></div><button class="btn green" onclick="openPage('stage5')">తరువాత పేజీ → దశ 5</button>`},
+stage5:{t:"🌾 దశ 5: మేత + pH",s:"మేత టేబుల్ - pH 6.5-8.5",b:`<div class="step"><b>చేప మేత</b><p>రోజు 1-15: 2kg | నెల 2: 5kg | నెల 6: 11kg</p></div><div class="step"><b>రొయ్య మేత</b><p>రోజు 1-15: 2kg | నెల 2: 7kg | నెల 4: 12kg</p></div><div class="step"><b>pH</b><p>6.5-8.5, తక్కువ = సున్నం</p></div><button class="btn green" onclick="openPage('stage6')">తరువాత పేజీ → దశ 6</button>`},
+stage6:{t:"🩺 దశ 6: జబ్బు",s:"జబ్బు - పరిష్కారం",b:`<div class="step"><b>తెల్ల మచ్చలు</b><p>సున్నం + ఉప్పు, 2 రోజులు మేత ఆపు</p></div><div class="step"><b>తినట్లేదు</b><p>మేత ఆపి, నీళ్ళు చెక్ చేయి</p></div><button class="btn green" onclick="openPage('stage7')">తరువాత పేజీ → దశ 7</button>`},
+stage7:{t:"🎣 దశ 7: హార్వెస్ట్",s:"ఎప్పుడు? ఎక్కడ? రేటు?",b:`<div class="step"><b>ఎప్పుడు?</b><p>రొయ్య 3-4 నెలలు, చేప 8-10 నెలలు</p></div><div class="step"><b>ఎక్కడ?</b><p>లోకల్ మార్కెట్ - రోహు ₹180/kg, రొయ్య ₹350/kg</p></div><p>🎉 అభినందనలు!</p>`},
+schemes:{t:"🏛️ ప్రభుత్వ పథకాలు",s:"PMMSY, సబ్సిడీ",b:`<input id="schemeSearch" onkeyup="filterSchemes()" placeholder="వెతుకు..."><div id="schemesList" style="margin-top:10px"></div>`},
+calc:{t:"🧮 చెరువు కాలిక్యులేటర్",s:"ఖర్చు - లాభం",b:`<label>ఎకరాలు:</label><input type="number" id="calcAcre" value="1" oninput="calcPond()"><label>రకం:</label><select id="calcType" onchange="calcPond()"><option value="chepa">🐟 చేప</option><option value="royya">🦐 రొయ్య</option></select><label>సీడ్ ₹:</label><input type="number" id="rateSeed" value="5" oninput="calcPond()"><label>ఫీడ్ ₹/kg:</label><input type="number" id="rateFeed" value="40" oninput="calcPond()"><label>అమ్మకం ₹/kg:</label><input type="number" id="rateSell" value="150" oninput="calcPond()"><button class="btn" onclick="calcPond()">లెక్కించు</button><p id="calcResult"></p>`},
+chat:{t:"🤖 చాట్‌బాట్",s:"ఏదైనా అడుగు",b:`<input id="searchInput" placeholder="సందేహం అడుగు..."><button class="btn" onclick="startVoice()">🎤 మాట్లాడి అడుగు</button><button class="btn green" onclick="askBot()">బాట్ ని అడుగు</button><div id="quickQ"></div><div class="chat" id="chatBox"></div>`},
+profile:{t:"👤 నా ప్రొఫైల్",s:"ప్రొఫైల్ మార్చు",b:`<label>పేరు</label><input id="editName" value="Priya"><label>ఫోన్</label><input id="editPhone" value="9876543210"><label>ఈమెయిల్</label><input id="editEmail" value="priya@gmail.com"><button class="btn green" onclick="saveProfile()">సేవ్ చేయి</button><p id="profileSaveMsg"></p><button class="btn" style="background:#C62828" onclick="logoutUser()">లాగ్అవుట్</button>`},
+help:{t:"❓ సహాయం",s:"సపోర్ట్",b:`<div id="helpList"></div><h3 style="margin-top:12px">ఇంకా సందేహమా?</h3><input id="helpName" placeholder="నీ పేరు"><textarea id="helpMsg" placeholder="నీ సందేహం..." style="width:100%;padding:12px;border-radius:12px"></textarea><button class="btn green" onclick="sendHelp()">మెసేజ్ పంపు</button><p id="helpResult"></p>`}
+},
+hi:{
+stage1:{t:"🦐 चरण 1: कैसे शुरू करें?",s:"0 से शुरू",b:`<div class="step"><b>तालाब नहीं?</b><p>किराया - 1 एकड़ Rs.20,000-30,000</p></div><div class="step"><b>झींगा vs मछली?</b><p>झींगा 3-4 महीने, मछली 8-10 महीने</p></div><button class="btn green" onclick="openPage('stage2')">अगला पेज → चरण 2</button>`},
+stage2:{t:"💧 चरण 2: तालाब विवरण",s:"गहराई, मिट्टी, आकार",b:`<div class="step"><b>गहराई</b><p>कम से कम 5 फीट, बेस्ट 6</p></div><div class="step"><b>मिट्टी</b><p>काली चिकनी बेस्ट</p></div><button class="btn green" onclick="openPage('stage3')">अगला पेज → चरण 3</button>`},
+stage3:{t:"🧪 चरण 3: तालाब तैयारी",s:"सुखाना - चूना - पानी",b:`<div class="step"><b>सुखाना</b><p>15 दिन धूप</p></div><div class="step"><b>चूना</b><p>100 Kg / एकड़</p></div><button class="btn green" onclick="openPage('stage4')">अगला पेज → चरण 4</button>`},
+stage4:{t:"🐣 चरण 4: बीज छोड़ना",s:"कहाँ? कितना?",b:`<div class="step"><b>कहाँ?</b><p>सरकारी हैचरी ही</p></div><div class="step"><b>कितना?</b><p>मछली 4000, झींगा 30000</p></div><button class="btn green" onclick="openPage('stage5')">अगला पेज → चरण 5</button>`},
+stage5:{t:"🌾 चरण 5: चारा + pH",s:"चारा टेबल - pH 6.5-8.5",b:`<div class="step"><b>मछली चारा</b><p>दिन 1-15: 2kg | महीना 2: 5kg</p></div><div class="step"><b>झींगा चारा</b><p>दिन 1-15: 2kg | महीना 2: 7kg</p></div><button class="btn green" onclick="openPage('stage6')">अगला पेज → चरण 6</button>`},
+stage6:{t:"🩺 चरण 6: बीमारी",s:"बीमारी - समाधान",b:`<div class="step"><b>सफेद धब्बे</b><p>चूना + नमक, 2 दिन चारा बंद</p></div><button class="btn green" onclick="openPage('stage7')">अगला पेज → चरण 7</button>`},
+stage7:{t:"🎣 चरण 7: हार्वेस्ट",s:"कब? कहाँ? रेट?",b:`<div class="step"><b>कब?</b><p>झींगा 3-4 महीने, मछली 8-10 महीने</p></div><div class="step"><b>कहाँ?</b><p>लोकल मार्केट - रोहू ₹180/kg, झींगा ₹350/kg</p></div><p>🎉 बधाई!</p>`},
+schemes:{t:"🏛️ सरकारी योजनाएं",s:"PMMSY, सब्सिडी",b:`<input id="schemeSearch" onkeyup="filterSchemes()" placeholder="खोजें..."><div id="schemesList" style="margin-top:10px"></div>`},
+calc:{t:"🧮 तालाब कैलकुलेटर",s:"खर्च - लाभ",b:`<label>एकड़:</label><input type="number" id="calcAcre" value="1" oninput="calcPond()"><label>प्रकार:</label><select id="calcType" onchange="calcPond()"><option value="chepa">🐟 मछली</option><option value="royya">🦐 झींगा</option></select><label>बीज ₹:</label><input type="number" id="rateSeed" value="5" oninput="calcPond()"><label>चारा ₹/kg:</label><input type="number" id="rateFeed" value="40" oninput="calcPond()"><label>बिक्री ₹/kg:</label><input type="number" id="rateSell" value="150" oninput="calcPond()"><button class="btn" onclick="calcPond()">हिसाब लगाएं</button><p id="calcResult"></p>`},
+chat:{t:"🤖 चैटबॉट",s:"कुछ भी पूछें",b:`<input id="searchInput" placeholder="अपना शक पूछें..."><button class="btn" onclick="startVoice()">🎤 बोलकर पूछें</button><button class="btn green" onclick="askBot()">बॉट से पूछें</button><div id="quickQ"></div><div class="chat" id="chatBox"></div>`},
+profile:{t:"👤 मेरी प्रोफाइल",s:"प्रोफाइल बदलें",b:`<label>नाम</label><input id="editName" value="Priya"><label>फोन</label><input id="editPhone" value="9876543210"><label>ईमेल</label><input id="editEmail" value="priya@gmail.com"><button class="btn green" onclick="saveProfile()">सेव करें</button><p id="profileSaveMsg"></p><button class="btn" style="background:#C62828" onclick="logoutUser()">लॉगआउट</button>`},
+help:{t:"❓ मदद",s:"सपोर्ट",b:`<div id="helpList"></div><h3 style="margin-top:12px">अभी भी शक?</h3><input id="helpName" placeholder="आपका नाम"><textarea id="helpMsg" placeholder="आपका शक..." style="width:100%;padding:12px;border-radius:12px"></textarea><button class="btn green" onclick="sendHelp()">मैसेज भेजें</button><p id="helpResult"></p>`}
+}};
+const BOT={en:[["pond|start","How to start pond?","1 Acre pond is enough. Prawn 3-4 months, Fish 8-10 months."],["depth","Pond depth?","Minimum 5 Feet, Best 6 Feet."],["lime","How much lime?","100 Kg Lime for 1 Acre."],["seed","How many seeds?","Fish 4000, Prawn 30000."],["feed","How much feed?","For 1000 Fish - 5 Kg per day. Morning 8 + Evening 5."],["ph","What should be pH?","Keep pH 6.5-8.5."],["disease","What if disease?","Lime + Salt. Stop feed 2 days."],["harvest","When harvest?","Prawn 3-4 Months, Fish 8-10 Months."],["pmmsy","What is PMMSY?","Govt gives 40% for new pond. SC/ST / Ladies 60%."]],
+te:[["cheruvu|modalu|start","చెరువు ఎలా మొదలు పెట్టాలి?","1 ఎకరం చెరువు చాలు. రొయ్య 3-4 నెలలు, చేప 8-10 నెలలు."],["lothu|depth","చెరువు లోతు ఎంత?","కనీసం 5 అడుగులు, బెస్ట్ 6."],["sunnam|chuna","సున్నం ఎంత వేయాలి?","1 ఎకరానికి 100 కిలోల సున్నం."],["seed","సీడ్ ఎంత వేయాలి?","చేప 4000, రొయ్య 30000."],["metha|feed","మేత ఎంత వేయాలి?","1000 చేపలకు రోజుకు 5 కిలోల ఫీడ్."],["ph","pH ఎంత ఉండాలి?","pH 6.5-8.5 మధ్య ఉంచండి."],["jabbu|vyadhi","జబ్బు వస్తే ఏం చేయాలి?","సున్నం + ఉప్పు వేయి. 2 రోజులు మేత ఆపు."],["harvest|kotha","హార్వెస్ట్ ఎప్పుడు?","రొయ్య 3-4 నెలలు, చేప 8-10 నెలలు."],["pmmsy","PMMSY అంటే ఏంటి?","కొత్త చెరువుకి govt 40% ఇస్తుంది. SC/ST / Ladies కి 60%."]],
+hi:[["talab|shuru|start","तालाब कैसे शुरू करें?","1 एकड़ तालाब काफी है। झींगा 3-4 महीने, मछली 8-10 महीने।"],["gaharai|depth","तालाब गहराई कितनी?","कम से कम 5 फीट, बेस्ट 6।"],["chuna|lime","चूना कितना डालें?","1 एकड़ के लिए 100 किलो चूना।"],["beej|seed","बीज कितना डालें?","मछली 4000, झींगा 30000।"],["chara|feed","चारा कितना डालें?","1000 मछली के लिए रोज 5 किलो चारा।"],["ph","pH कितना होना चाहिए?","pH 6.5-8.5 के बीच रखो।"],["bimari|disease","बीमारी आए तो क्या करें?","चूना + नमक डालो। 2 दिन चारा बंद।"],["harvest|katai","हार्वेस्ट कब?","झींगा 3-4 महीने, मछली 8-10 महीने।"],["pmmsy","PMMSY क्या है?","नए तालाब के लिए सरकार 40% देती है। SC/ST / महिलाओं को 60%।"]]};
+const SCHEMES={en:[{t:"PMMSY - 40% / 60%",m:"40% - 60% FREE",d:"For new pond Govt 40% - SC/ST / Ladies 60%."},{t:"Matsyakara Sevalo - Rs. 20,000",m:"Rs. 20,000",d:"April 15 - June 14 - Govt gives Rs. 20,000."},{t:"Current Subsidy - Rs. 1.50 / Unit",m:"Rs. 1.50 / Unit",d:"For Aqua pond Current Rs. 1.50 per unit."},{t:"GAIS Insurance - Rs. 5 Lakh FREE",m:"Rs. 5 Lakh",d:"If accident - Rs. 5 Lakh, Hospital Rs. 25,000."}],
+te:[{t:"PMMSY - 40% / 60%",m:"40% - 60% FREE",d:"కొత్త చెరువుకి govt 40% - SC/ST / Ladies కి 60%."},{t:"మత్స్యకార సేవలో - Rs. 20,000",m:"Rs. 20,000",d:"April 15 - June 14 - govt Rs. 20,000 ఇస్తుంది."},{t:"కరెంట్ సబ్సిడీ - Rs. 1.50 / Unit",m:"Rs. 1.50 / Unit",d:"Aqua చెరువుకి current Rs. 1.50 ke unit ke."},{t:"GAIS ఇన్సూరెన్స్ - Rs. 5 Lakh FREE",m:"Rs. 5 Lakh",d:"Accident అయితే Rs. 5 Lakh, hospital కి Rs. 25,000."}],
+hi:[{t:"PMMSY - 40% / 60%",m:"40% - 60% FREE",d:"नए तालाब के लिए सरकार 40% - SC/ST / महिलाओं को 60%।"},{t:"मत्स्यकार सेवेलो - Rs. 20,000",m:"Rs. 20,000",d:"15 अप्रैल - 14 जून - सरकार Rs. 20,000 देती है।"},{t:"बिजली सब्सिडी - Rs. 1.50 / यूनिट",m:"Rs. 1.50 / Unit",d:"Aqua तालाब के लिए बिजली Rs. 1.50 प्रति यूनिट।"},{t:"GAIS बीमा - Rs. 5 लाख FREE",m:"Rs. 5 Lakh",d:"दुर्घटना होने पर Rs. 5 लाख, अस्पताल के लिए Rs. 25,000।"}]};
+const FAQS={en:[["❓ Login not working?","Enter Name, 10 Digits Phone, @gmail.com Email. Click Send OTP - Copy Demo OTP."],["❓ Voice not working?","Allow Mic in Chrome. Speak Telugu / Hindi / English."]],
+te:[["❓ లాగిన్ అవ్వట్లేదు?","పేరు, 10 అంకెల ఫోన్, @gmail.com ఈమెయిల్ పెట్టాలి. OTP పంపు నొక్కి - డెమో OTP కాపీ చేయి."],["❓ వాయిస్ పని చేయట్లేదు?","Chrome లో Mic Allow చేయి. తెలుగు / హిందీ / ఇంగ్లీష్ లో మాట్లాడు."]],
+hi:[["❓ लॉगिन नहीं हो रहा?","नाम, 10 अंकों का फोन, @gmail.com ईमेल डालें। OTP भेजें दबाएं - डेमो OTP कॉपी करें।"],["❓ वॉयस काम नहीं कर रहा?","Chrome में Mic Allow करें। तेलुगु / हिंदी / अंग्रेजी में बोलें।"]]};
+const NOTIFS={en:[{t:"🌦️ Weather Alert",d:"Good weather today. Best time for Spraying. 27°C."},{t:"🏛️ PMMSY Scheme",d:"Govt gives 40% subsidy for new pond."},{t:"🐟 Feed Reminder",d:"Feed time! Morning 8 AM - Give feed now."}],
+te:[{t:"🌦️ వాతావరణ హెచ్చరిక",d:"ఈ రోజు మంచి వాతావరణం. స్ప్రే వేయడానికి మంచి సమయం."},{t:"🏛️ PMMSY పథకం",d:"కొత్త చెరువుకి ప్రభుత్వం 40% సబ్సిడీ ఇస్తుంది."},{t:"🐟 మేత గుర్తు",d:"మేత సమయం! ఉదయం 8 గంటలు - ఇప్పుడు మేత వేయి."}],
+hi:[{t:"🌦️ मौसम अलर्ट",d:"आज अच्छा मौसम है। स्प्रे डालने का अच्छा समय है।"},{t:"🏛️ PMMSY योजना",d:"नए तालाब के लिए सरकार 40% सब्सिडी देती है।"},{t:"🐟 चारा याद",d:"चारा समय! सुबह 8 बजे - अभी चारा डालो।"}]};
+function toggleDrop(id){let el=document.getElementById(id);let o=el.style.display=='block';closeDrops();if(!o)el.style.display='block';if(id=='notifDrop')renderNotifs()}
+function closeDrops(){['langDrop','notifDrop','profileDrop'].forEach(i=>document.getElementById(i).style.display='none')}
+function renderNotifs(){document.getElementById('notifList').innerHTML=NOTIFS[curLang].map((n,i)=>`<div style="padding:12px;border-bottom:1px solid #eee;cursor:pointer;background:${notifRead[i]?'#fff':'#E3F2FD'}" onclick="notifRead[${i}]=true;renderNotifs();updateNotifCount();closeDrops();openPage('schemes')"><b>${n.t}</b><p style="font-size:13px;color:#555">${n.d}</p></div>`).join('')}
+function updateNotifCount(){let c=notifRead.filter(x=>!x).length;let el=document.getElementById('notifCount');el.style.display=c>0?'flex':'none';el.innerText=c}
+function markAllRead(){notifRead=[true,true,true];renderNotifs();updateNotifCount()}
+function setLang(l){curLang=l;document.getElementById('curLangLabel').innerText=l=='te'?'తెలుగు':l=='hi'?'हिंदी':'English';document.querySelectorAll('.langs button').forEach(b=>b.classList.remove('on'));if(l=='te')document.getElementById('lTe').classList.add('on');if(l=='hi')document.getElementById('lHi').classList.add('on');if(l=='en')document.getElementById('lEn').classList.add('on');renderHome();if(curPage)openPage(curPage)}
+function renderHome(){document.getElementById('homeList').innerHTML=HOME[curLang].map(it=>`<div class="card" onclick="openPage('${it.id}')"><div class="icon" style="background:${it.c}">${it.i}</div><div style="flex:1"><b>${it.t}</b><br><small style="color:#666">${it.s}</small></div><div>›</div></div>`).join('');document.getElementById('moreList').innerHTML=MORE[curLang].map(it=>`<div class="card" onclick="openPage('${it.id}')"><div class="icon" style="background:${it.c}">${it.i}</div><div style="flex:1"><b>${it.t}</b><br><small style="color:#666">${it.s}</small></div><div>›</div></div>`).join('')}
+/* FULL PAGE OPEN - SLIDE KADHU */
+function openPage(id){curPage=id;let d=SLIDES[curLang][id];if(!d)return;document.getElementById('mainApp').style.display='none';document.getElementById('detailPage').style.display='block';document.getElementById('pageTitle').innerHTML=d.t;document.getElementById('pageSub').innerHTML=d.s;document.getElementById('pageBody').innerHTML=d.b;window.scrollTo({top:0});if(id=='calc')calcPond();if(id=='schemes')showSchemes(SCHEMES[curLang]);if(id=='chat'){updateChat();renderQuickQ()}if(id=='help')renderHelp();if(id=='profile'){document.getElementById('editName').value=user.name;document.getElementById('editPhone').value=user.phone;document.getElementById('editEmail').value=user.email}}
+function goHome(){curPage=null;document.getElementById('detailPage').style.display='none';document.getElementById('mainApp').style.display='block';window.scrollTo({top:0,behavior:'smooth'})}
+function sendOTP(){let n=document.getElementById('name').value.trim(),p=document.getElementById('phone').value.trim(),e=document.getElementById('email').value.trim().toLowerCase();if(!n){document.getElementById('loginMsg').innerHTML="❌ Enter Name!";return}if(p.length!=10){document.getElementById('loginMsg').innerHTML="❌ Mobile 10 Digits!";return}if(!e.endsWith("@gmail.com")){document.getElementById('loginMsg').innerHTML="❌ Email @gmail.com!";return}otp=Math.floor(1000+Math.random()*9000).toString();document.getElementById('loginMsg').innerHTML=`✅ OTP Sent!<br><b style="color:red;font-size:22px">DEMO OTP: ${otp}</b>`}
+function verifyOTP(){let e=document.getElementById('otp').value.trim();if(!otp){document.getElementById('loginMsg').innerHTML="❌ Click Send OTP First!";return}if(e!=otp){document.getElementById('loginMsg').innerHTML="❌ OTP Wrong! Correct: "+otp;return}user={name:document.getElementById('name').value.trim(),phone:document.getElementById('phone').value.trim(),email:document.getElementById('email').value.trim()};updateProfile();document.getElementById('loginPage').style.display='none';document.getElementById('mainHead').style.display='block';document.getElementById('mainApp').style.display='block';document.getElementById('mainFoot').style.display='flex';renderHome();loadWeather()}
+function updateProfile(){document.getElementById('userNameTop').innerText=user.name;document.getElementById('headerProfileName').innerText=user.name;document.getElementById('profileName').innerText=user.name;document.getElementById('profilePhone').innerText=user.phone+" | "+user.email}
+function saveProfile(){let n=document.getElementById('editName').value.trim(),p=document.getElementById('editPhone').value.trim(),e=document.getElementById('editEmail').value.trim();if(!n||p.length!=10){document.getElementById('profileSaveMsg').innerHTML="❌ Name + 10 Digits!";return}user={name:n,phone:p,email:e};updateProfile();document.getElementById('profileSaveMsg').innerHTML="✅ Saved!";document.getElementById('name').value=n;document.getElementById('phone').value=p;document.getElementById('email').value=e}
+function logoutUser(){closeDrops();goHome();document.getElementById('loginPage').style.display='flex';document.getElementById('mainHead').style.display='none';document.getElementById('mainApp').style.display='none';document.getElementById('mainFoot').style.display='none';document.getElementById('loginMsg').innerHTML="✅ Logged Out! Again Login chey!";setLang(curLang)}
+function updateChat(){let w={en:"<b>Bot:</b> Hello! Ask anything.",te:"<b>Bot:</b> నమస్తే! ఏదైనా అడుగు.",hi:"<b>Bot:</b> नमस्ते! कुछ भी पूछो।"}[curLang];let b=document.getElementById('chatBox');if(b)b.innerHTML=w}
+function renderQuickQ(){let el=document.getElementById('quickQ');if(!el)return;el.innerHTML=BOT[curLang].map((b,i)=>`<span class="qchip" onclick="askQuick(${i})">${b[1]}</span>`).join('')}
+function askQuick(i){document.getElementById('searchInput').value=BOT[curLang][i][1];askBot()}
+function askBot(){let q=document.getElementById('searchInput').value.trim().toLowerCase();if(!q)return;let f=BOT[curLang].find(b=>b[0].split('|').some(k=>q.includes(k)));let ans=f?f[2]:"Try - Pond Depth? Feed?";document.getElementById('chatBox').innerHTML=`<b>You:</b> ${document.getElementById('searchInput').value}<br><b>Bot:</b> ${ans}`;try{let u=new SpeechSynthesisUtterance(ans);u.lang=curLang=='te'?'te-IN':curLang=='hi'?'hi-IN':'en-IN';speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function startVoice(){openPage('chat');setTimeout(()=>{try{let r=new (window.SpeechRecognition||window.webkitSpeechRecognition)();r.lang=curLang=='te'?'te-IN':curLang=='hi'?'hi-IN':'en-IN';r.onresult=e=>{document.getElementById('searchInput').value=e.results[0][0].transcript;askBot()};r.start();document.getElementById('chatBox').innerHTML="<b>🎤 Listening... Speak...</b>"}catch(e){}},300)}
+function openSearch(){document.getElementById('searchModal').style.display='flex';setTimeout(()=>document.getElementById('globalSearch').focus(),100)}
+function closeSearch(){document.getElementById('searchModal').style.display='none'}
+function doGlobalSearch(){let q=document.getElementById('globalSearch').value.trim().toLowerCase();let box=document.getElementById('searchResults');if(!q){box.innerHTML="<p style='color:#666'>Type - Ex: Feed, pH, PMMSY...</p>";return}let res=[];BOT[curLang].forEach(b=>{if(b[0].includes(q)||b[1].toLowerCase().includes(q))res.push(`<div style="background:#F1F8F9;padding:10px;border-radius:10px;margin:6px 0"><b>${b[1]}</b><br>${b[2]}</div>`)});if(res.length==0)res.push(`<div style="background:#F1F8F9;padding:10px;border-radius:10px"><b>See in Home</b><br><button class="btn" onclick="closeSearch()">Close</button></div>`);box.innerHTML=res.join('')}
+function renderHelp(){let el=document.getElementById('helpList');if(!el)return;el.innerHTML=FAQS[curLang].map((f,i)=>`<div style="background:#F1F8F9;padding:12px;border-radius:12px;margin:8px 0;cursor:pointer" onclick="let d=document.getElementById('faq${i}');d.style.display=d.style.display=='none'?'block':'none'"><b>${f[0]}</b><div id="faq${i}" style="display:none;margin-top:6px">${f[1]}</div></div>`).join('')}
+function sendHelp(){let m=document.getElementById('helpMsg').value.trim();if(!m){document.getElementById('helpResult').innerHTML="❌ Write Message!";return}document.getElementById('helpResult').innerHTML=`✅ Thanks ${user.name}! Message received.`;document.getElementById('helpMsg').value=""}
+function showSchemes(list){let el=document.getElementById('schemesList');if(!el)return;el.innerHTML=list.map((s,i)=>`<div onclick="let d=document.getElementById('sd${i}');d.style.display=d.style.display=='none'?'block':'none'" style="background:#fff;border:1px solid #eee;border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer"><b>${s.t}</b><div style="color:green;font-weight:bold">💰 ${s.m}</div><div id="sd${i}" style="display:none;font-size:13px;margin-top:6px">${s.d}</div></div>`).join('')}
+function filterSchemes(){let q=document.getElementById('schemeSearch').value.toLowerCase();showSchemes(SCHEMES[curLang].filter(s=>s.t.toLowerCase().includes(q)))}
+function calcPond(){let a=parseFloat(document.getElementById('calcAcre').value)||1,ty=document.getElementById('calcType').value,sr=parseFloat(document.getElementById('rateSeed').value)||0,fr=parseFloat(document.getElementById('rateFeed').value)||0,sel=parseFloat(document.getElementById('rateSell').value)||0,cost=0,rev=0,kg=0,det="";if(ty=="chepa"){let f=Math.round(4000*a),h=Math.round(f*0.8);kg=h;let fk=Math.round(kg*1.5);cost=f*sr+fk*fr+1800*8*a;rev=kg*sel;det=`Seed ${f} | Feed ${fk}Kg | Yield ${h} Fish = ${kg}Kg`}else{let s=Math.round(50000*a),h=Math.round(s*0.7);kg=Math.round(h*0.025);let fk=Math.round(kg*1.4);cost=s*sr+fk*fr+25000*a;rev=kg*sel;det=`Seed ${s} | Feed ${fk}Kg | Yield ${h} Prawn = ${kg}Kg`}document.getElementById('calcResult').innerHTML=`<hr><b>Cost: ₹${Math.round(cost).toLocaleString('en-IN')}</b><br>${det}<br><b>Income: ₹${Math.round(rev).toLocaleString('en-IN')}</b><br><b>Profit: ₹${Math.round(rev-cost).toLocaleString('en-IN')}</b>`}
+async function loadWeather(){try{let pos=await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(res,rej,{timeout:6000}));let w=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos.coords.latitude}&longitude=${pos.coords.longitude}&current=temperature_2m,relative_humidity_2m&timezone=auto`);let wd=await w.json();document.getElementById('topWeather').innerText=`🌤️ Partly Cloudy | ${Math.round(wd.current.temperature_2m)}°C | Humidity ${wd.current.relative_humidity_2m}%`;document.getElementById('topMini').innerText=`🌤️ ${Math.round(wd.current.temperature_2m)}°C`}catch(e){}}
+document.addEventListener('click',e=>{if(!e.target.closest('header'))closeDrops()});
+setLang('en');renderHome();updateNotifCount();
+</script>
+</body>
+</html>
